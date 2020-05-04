@@ -13,7 +13,7 @@ export const PageBodyListItem = ({item, dataType, dataTranslator}) =>(
                         <div>
                             <strong>{NOAADataTranslator(key, dataType)}</strong>
                         </div>
-                        <span>{NOAATranslateDataValue(key,item[key],dataType)}</span>
+                        <span>{NOAATranslateDataValue(key, item[key], dataType)}</span>
                     </div>
                 );
             }
