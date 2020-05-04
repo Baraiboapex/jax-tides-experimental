@@ -14,3 +14,11 @@ export function NOAAFilteredDataTranslator(data, dataProduct){
                     },{});
     return filter;
 }
+
+export function NOAATranslateDataValue(objectKeyToTranslate, keyValue, dataProduct){
+    return (NOAADataKey[dataProduct]["valueTranslator"][objectKeyToTranslate] ? 
+        NOAADataKey[dataProduct]["valueTranslator"][objectKeyToTranslate][keyValue]
+        :
+        keyValue
+    );
+}

@@ -8,7 +8,7 @@ const NOAADataKey = {
             q:'Quality Assurance Level',
         },
         valueTranslator:{
-            qulityAssurance:{
+            q:{
                 p:'Not Yet Verified',
                 v:'Verified'
             }
