@@ -1,0 +1,10 @@
+div.card.loading-card-content{
+    background-color:rgba(0,0,0,0.7);
+    height:34vh;
+    width:44vw;
+
+    .loader-spinner{
+        height:3.5em;
+        width:3.5em;
+    }
+}

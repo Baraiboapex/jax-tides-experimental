@@ -1,0 +1,36 @@
+#pageHeader{
+    background-color: rgba(0,0,0,0.3);
+    
+    & a.navbar-brand{
+        padding:1em;
+    }
+    
+    & button.navbar-toggler{
+        border:0px;
+        & span.navbar-toggler-icon{
+            font-size: 2.2rem;
+            color:white;
+        }
+        &:active{
+            outline: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+        &:hover{
+            outline: none;
+            background-color: rgba(0,0,0,0.3);
+        }
+        &:focus{
+            outline:none;
+        }
+    }
+
+    & div.link a{
+        color:white;
+        text-decoration: none;
+        border-radius:0.3em;
+        padding:1em;
+        &:hover{
+            background-color: rgba(0,0,0,0.3);
+        }
+    }
+}

@@ -30,7 +30,7 @@ class PageBodyList extends React.Component{
         const dataTranslator = NOAAFilteredDataTranslator(hasFilter, dataType);
 
         return(
-            <div id="PageList" className="container-fluid">
+            <div className="p-2 rounded page-list container-fluid">
                 {this.props.data.map(item => this.props.listItem(item, dataTranslator))}
             </div>
         );

@@ -1,0 +1,7 @@
+Steps to implement redux into Jax Tides App
+
+1.) Will use redux to keep an application state for the current time of day. For determining which picture of the ocean to load 
+into the application background, and also how to show tide prediction data based on the current time of day.
+
+2.)If the current time of day is greater than the latest tide prediction of the current day, then the application
+will reload all of its tide prediction data and display said data for the following day.

@@ -1,0 +1,29 @@
+div.jt-background-image{
+    height:100%;
+    width:100%;
+    margin:auto 0;
+    overflow-y:scroll;
+}
+
+/*
+'../../../images/ocean-water-wave-photo-1295138.jpg',
+'../../../images/sunset-984052_1920.jpg',
+'../../../images/wallpaperflare.com_wallpaper.jpg'
+*/
+.day-image{
+    background-image:url('../../../images/ocean-water-wave-photo-1295138.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.evening-image{
+    background-image:url('../../../images/sunset-984052_1920.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.night-image{
+    background-image:url('../../../images/wallpaperflare.com_wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+}

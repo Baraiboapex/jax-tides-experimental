@@ -1,12 +1,17 @@
 import React from 'react';
+
 import './App.css';
-import TidePage from './pages/tide-page/tide-page.component';
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import JTRouter from './components/Routes/routes.component';
+
+import PageBackground from './components/PageComponents/page-background/page-background.component';
 
 function App() {
   return (
     <div className="App">
-      <TidePage/>
+      <PageBackground>
+        <JTRouter/>
+      </PageBackground>
     </div>
   );
 }

@@ -1,8 +1,19 @@
 html,body{
     height:100%;
+    margin:0;
+}
+
+body{
+    height:100%;
+    background-image: url('./images/ocean-water-wave-photo-1295138.jpg');
+    background-position: center;
+    background-repeat: initial;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 #root, .App, .page-top{
     height:100%;
 }
+
 
