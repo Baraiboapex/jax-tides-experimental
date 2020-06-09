@@ -23,21 +23,21 @@ export default function JTRouter(){
                 logo={<Logo className="jax-tides-logo"/>}
                 render={(navExpanded, closeNav) => (
                     <React.Fragment>
-                        <div className="link p-1"><Link to ="/" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
-                        <div className="link p-1"><Link to ="/watertemp" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
-                        <div className="link p-1"><Link to ="/windspeeds" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
+                        <div className="link p-1"><Link to ="/jax-tides/" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
+                        <div className="link p-1"><Link to ="/jax-tides/watertemp" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
+                        <div className="link p-1"><Link to ="/jax-tides/windspeeds" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
                     </React.Fragment>
                 )}
             />
             <br/>
             <Switch>
-                <Route exact path="/">
+                <Route exact path="/jax-tides/">
                     <TidePage/>
                 </Route>
-                <Route exact path="/watertemp">
+                <Route exact path="/jax-tides/watertemp">
                     <WaterTempPage/>
                 </Route>
-                <Route exact path="/windspeeds">
+                <Route exact path="/jax-tides/windspeeds">
                     <WindPage/>
                 </Route>
             </Switch>

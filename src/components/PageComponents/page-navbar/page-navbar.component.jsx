@@ -27,7 +27,7 @@ class PageNavBar extends React.Component{
         return(
             <Container>
                 <Navbar expanded={navExpanded} id="pageHeader" className="rounded" variant="dark" expand="md">
-                    <Navbar.Brand href="/">{logo ? logo : brandName}</Navbar.Brand>
+                    <Navbar.Brand href="/jax-tides/">{logo ? logo : brandName}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={this.expandNav}/>
                     <Navbar.Collapse className="navbar-right" id="basic-navbar-nav">
                         <Nav className="ml-auto">

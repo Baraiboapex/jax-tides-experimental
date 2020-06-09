@@ -25,6 +25,7 @@ class TidePage extends React.Component{
     abortFetch = new AbortController();
 
     componentDidMount(){
+        console.log("mount");
         this.getData();
         window.setInterval(()=>{
             this.getData();
@@ -32,6 +33,7 @@ class TidePage extends React.Component{
     }
 
     getData = () => {
+        console.log("Get Data");
         const urls = [
             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
             `https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&begin_date=${getFullDateForAPI()}&end_date=${getFullDateForAPI()}&datum=MLLW&station=8720218&time_zone=lst_ldt&units=english&interval=hilo&format=json&application=NOS.COOPS.TAC.TidePred`
