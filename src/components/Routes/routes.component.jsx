@@ -1,4 +1,7 @@
 import React from 'react'
+
+import {ReactComponent as Logo} from '../../assets/jax_tides.svg';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,11 +18,17 @@ export default function JTRouter(){
     return(
         <Router>
             <br/>
-            <PageNavBar>
-                <div className="link p-3"><Link to ="/"><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
-                <div className="link p-3"><Link to ="/watertemp"><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
-                <div className="link p-3"><Link to ="/windspeeds"><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
-            </PageNavBar>
+            <PageNavBar 
+                brandName="JaxTides"
+                logo={<Logo className="jax-tides-logo"/>}
+                render={(navExpanded, closeNav) => (
+                    <React.Fragment>
+                        <div className="link p-1"><Link to ="/" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
+                        <div className="link p-1"><Link to ="/watertemp" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
+                        <div className="link p-1"><Link to ="/windspeeds" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
+                    </React.Fragment>
+                )}
+            />
             <br/>
             <Switch>
                 <Route exact path="/">

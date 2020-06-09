@@ -6,7 +6,7 @@ export const PageBodyTopCardJumbotron = ({title, customClasses, children}) => (
  <div className="container-fluid">
     <div className={"card text-center top-jt-dark-tran " + customClasses}>
         <div className="card-header text-center">
-            <h5>{title}</h5>
+            <h6>{title}</h6>
         </div>
         <div className="card-body jumbotron text-center top-jt-dark-tran m-0">
             {children}

@@ -1,7 +1,17 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
+
 div.card.loading-card-content{
     background-color:rgba(0,0,0,0.7);
-    height:34vh;
-    width:44vw;
+
+    @include media-breakpoint-down(lg) {
+        width:44vw;
+    }
+
+    @include media-breakpoint-down(sm) {
+        width:75vw;
+    }
 
     .loader-spinner{
         height:3.5em;

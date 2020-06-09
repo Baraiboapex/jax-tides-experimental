@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import moment from 'moment';
 
-import {getCurrentTime} from '../../../utils/time-parser-functions';
+import {getCurrent24HourTime} from '../../../utils/time-parser-functions';
 
 import './page-background.styles.scss';
 
@@ -23,7 +23,7 @@ class PageBackground extends Component{
     }
 
     setTimeOfDay = () => {
-        const currentTime = getCurrentTime("current_time_24h");
+        const currentTime = getCurrent24HourTime();
         if(moment(currentTime,"HH:mm").valueOf() > moment("17:30","HH:mm").valueOf())
             this.setState({timeOfDayImage:"evening-image"});
         else if (moment(currentTime,"HH:mm").valueOf() > moment("19:30","HH:mm").valueOf())

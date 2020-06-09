@@ -12,10 +12,7 @@ export function parseNormalTime(time, clockOnly){
     return (clockOnly !== "clock_only" ?  date + ' ' + time.join ('') : time.join('')); // return adjusted time or original string
 }
 
-//TO LONG!!!!! REFACTOR THIS LATER TODAY!!!!
-export function getCurrentTime(returnType){
-  let toReturn = "";
-
+export function getCurrentFullDay(){
   const today = new Date();
 
   const full = today.getFullYear().toString() + "-" + 
@@ -24,38 +21,38 @@ export function getCurrentTime(returnType){
   (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString()) + ":" + 
   (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
 
-  const forApi = today.getFullYear().toString() + 
+  return full;
+};
+
+export function getCurrent24HourTime(){
+  const today = new Date();
+
+  const current24HourTime = (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
+  (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
+
+  return current24HourTime;
+}
+
+export function getFullDateForAPI(){
+  const today = new Date();
+
+  const fullDateForAPI = today.getFullYear().toString() + 
   (today.getMonth()+1 > 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) +  
   (today.getDate() > 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() );
 
-  const forApiWithTime = today.getFullYear().toString() + 
+  return fullDateForAPI;
+}
+
+export function getFullDateForAPIWithClockTime(){
+  const today = new Date();
+
+  const fullDateForAPIWithClockTime = today.getFullYear().toString() + 
   (today.getMonth()+1 > 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) + 
   (today.getDate() > 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() ) + " " +
   (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
   (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
 
-  const currentTime24h = (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
-  (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
-
-  switch(returnType){
-    case "get_full_date":
-      toReturn = full 
-      break;
-    case "get_api_time":
-      toReturn = forApi
-      break;
-    case "get_api_date_with_time":
-      toReturn = forApiWithTime
-      break;
-    case "current_time_24h":
-      toReturn = currentTime24h;
-      break;
-    default:
-      toReturn = "No Type Specified"
-      break;
-  }
-
-  return toReturn;
+  return fullDateForAPIWithClockTime;
 }
 
 export function latestTime(arr){

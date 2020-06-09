@@ -6,10 +6,11 @@ const NOAADataKey = {
         values:{
             t:'Time Recorded',
             v:'Water Height',
-            type:"Tide Level;"
+            type:"Tide Level"
         },
         valueTranslator:{
-            t:(time)=>parseNormalTime(time),
+            t:(time)=>parseNormalTime(time, "clock_only"),
+            v:(val) => val + ' ft.',
             type:{
                 H:'High',
                 L:'Low',

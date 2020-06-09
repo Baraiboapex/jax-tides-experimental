@@ -16,10 +16,10 @@ class PageBodyList extends React.Component{
         };
     }
 
-    //Wire this up later.
-    handleFieldFilterChange = (e) => {
+    // //Wire this up later.
+    // handleFieldFilterChange = (e) => {
 
-    }
+    // }
     
     render(){
         const {fieldFilter} = this.state;
@@ -30,8 +30,10 @@ class PageBodyList extends React.Component{
         const dataTranslator = NOAAFilteredDataTranslator(hasFilter, dataType);
 
         return(
-            <div className="p-2 rounded page-list container-fluid">
-                {this.props.data.map(item => this.props.listItem(item, dataTranslator))}
+            <div className="container-fluid">
+                <div className="p-2 rounded page-list">
+                    {this.props.data.map(item => this.props.listItem(item, dataTranslator))}
+                </div>
             </div>
         );
     }
