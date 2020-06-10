@@ -34,6 +34,7 @@ class TidePage extends React.Component{
 
     getData = () => {
         console.log("Get Data");
+        console.log(getFullDateForAPI());
         const urls = [
             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
             `https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&begin_date=${getFullDateForAPI()}&end_date=${getFullDateForAPI()}&datum=MLLW&station=8720218&time_zone=lst_ldt&units=english&interval=hilo&format=json&application=NOS.COOPS.TAC.TidePred`
@@ -51,7 +52,10 @@ class TidePage extends React.Component{
             })
         );
         Promise.all(getAllRequests)
-        .then(stationAndTides => this.setState(
+        .then(stationAndTides => {
+            console.log(getAllRequests)
+            console.log(getFullDateForAPI());
+            return this.setState(
                 {
                     station:stationAndTides[0].stations[0], 
                     tides:stationAndTides[1].predictions
@@ -61,7 +65,7 @@ class TidePage extends React.Component{
                     this.sortDataByTime();
                 }
             )
-        )
+        })
         .catch(error => {
             if(error.name === "AbortError") return
             console.error(error)
@@ -129,9 +133,11 @@ class TidePage extends React.Component{
             </React.Fragment>
         );
 
+            console.log(tides);
+
         return (
             <div className="page-top d-flex container-fluid p-0">
-                {tides.length > 0 ? (
+                {tides.length ? (
                     <PageContainer pageBody={pageBody1}/>
                 ) : (
                     <PageDataLoadingCard dataType="Tides"/>

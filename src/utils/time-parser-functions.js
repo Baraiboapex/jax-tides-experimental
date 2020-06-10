@@ -16,10 +16,10 @@ export function getCurrentFullDay(){
   const today = new Date();
 
   const full = today.getFullYear().toString() + "-" + 
-  (today.getMonth()+1 > 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) + "-" + 
-  (today.getDate() > 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() ) + " " +
-  (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString()) + ":" + 
-  (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
+  (today.getMonth()+1 >= 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) + "-" + 
+  (today.getDate() >= 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() ) + " " +
+  (today.getHours() >= 10 ? today.getHours().toString() : "0"+today.getHours().toString()) + ":" + 
+  (today.getMinutes() >= 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
 
   return full;
 };
@@ -27,8 +27,8 @@ export function getCurrentFullDay(){
 export function getCurrent24HourTime(){
   const today = new Date();
 
-  const current24HourTime = (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
-  (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
+  const current24HourTime = (today.getHours() >= 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
+  (today.getMinutes() >= 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
 
   return current24HourTime;
 }
@@ -37,8 +37,8 @@ export function getFullDateForAPI(){
   const today = new Date();
 
   const fullDateForAPI = today.getFullYear().toString() + 
-  (today.getMonth()+1 > 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) +  
-  (today.getDate() > 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() );
+  (today.getMonth()+1 >= 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) +
+  (today.getDate() >= 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() );
 
   return fullDateForAPI;
 }
@@ -47,10 +47,10 @@ export function getFullDateForAPIWithClockTime(){
   const today = new Date();
 
   const fullDateForAPIWithClockTime = today.getFullYear().toString() + 
-  (today.getMonth()+1 > 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) + 
-  (today.getDate() > 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() ) + " " +
-  (today.getHours() > 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
-  (today.getMinutes() > 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
+  (today.getMonth()+1 >= 10 ? (today.getMonth()+1).toString() : "0"+(today.getMonth()+1).toString()) + 
+  (today.getDate() >= 10 ? (today.getDate()).toString() : "0"+(today.getDate()).toString() ) + " " +
+  (today.getHours() >= 10 ? today.getHours().toString() : "0"+today.getHours().toString())+ ":" + 
+  (today.getMinutes() >= 10 ? today.getMinutes().toString() : "0"+today.getMinutes().toString());
 
   return fullDateForAPIWithClockTime;
 }
