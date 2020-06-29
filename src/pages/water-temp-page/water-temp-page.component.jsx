@@ -6,81 +6,27 @@ import PageContainer from '../../components/PageComponents/page-container/page-c
 import PageBodyButtonGroup from '../../components/PageComponents/page-body-btn-group/page-body-btn-group.component';
 import { PageBodyTopCardJumbotron } from '../../components/PageComponents/page-body-top-jumbotron/page-body-top-jumbotron-card.component';
 
+import WithData from '../../components/HOCs/withData.component';
+
 import './water-temp-page.styles.scss';
 
-import { NOAAFilteredDataTranslator, NOAATranslateDataValue } from '../../utils/noaa-data-translator';
+import { NOAATranslateDataValue } from '../../utils/noaa-data-translator';
 import { parseNormalTime} from '../../utils/time-parser-functions';
 
 class WaterTempPage extends React.Component{
-    constructor(){
-        super();
-        this.state={
-            station:{},
-            waterTemp:[],
-            tempUnit:"farenheight"
-        };
-    }
-
-    abortFetch = new AbortController();
-
-    componentDidMount(){
-        this.getData();
-        window.setInterval(()=>{
-            this.getData();
-        },12000);
-    }
-
-    getData = () => {
-        const urls = [
-            'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
-            `https://tidesandcurrents.noaa.gov/api/datagetter?&station=8720218&date=latest&units=english&datum=MLLW&product=water_temperature&time_zone=LST_LDT&format=json&application=NOS.COOPS.TAC.COOPSMAP&interval=`
-        ];
-        const getAllRequests = urls.map(
-            url => fetch(url,{signal:this.abortFetch.signal}).then(res => {
-                if(res.ok){
-                    return res.json();
-                }else{
-                    return Promise.reject({
-                        status:res.status,
-                        error:res.statusText
-                    })
-                }
-            })
-        );
-        Promise.all(getAllRequests)
-        .then(stationAndTemp => this.setState(
-                {
-                    station:stationAndTemp[0].stations[0], 
-                    waterTemp:stationAndTemp[1].data
-                }
-                ,()=>{
-                    this.sortDataByTime();
-                }
-            )
-        )
-        .catch(error => {
-            if(error.name === "AbortError") return
-            console.error(error)
-        });
-    }
-
-    sortDataByTime = () => {
-        const currWaterTemp = [...this.state.waterTemp];
-        const newWaterTempData = currWaterTemp.slice().sort((curr,prev) => new Date(curr.t) > new Date(prev.t) ? -1 : 1);
-        this.setState({
-             windSpeeds:newWaterTempData
-        });
-    }
+    state={
+        tempUnit:"farenheight"
+    };
 
     updateCelOrFar = (e) => this.setState({tempUnit:e.currentTarget.value})
 
     showCelOrFar = (tempUnit, val) =>{
-        const {waterTemp} = this.state;
-        return (waterTemp.length > 0 ?  
+        const {data} = this.props;
+        return (data.length > 0 ?  
              (tempUnit === "celsius" ? 
-                (waterTemp.length > 0 ? NOAATranslateDataValue("v", waterTemp[0][val],"TempData")  : "")
+                (data.length > 0 ? NOAATranslateDataValue("v", data[0][val],"TempData")  : "")
                 :
-                (waterTemp.length > 0 ? waterTemp[0][val]+" °F" : "")
+                (data.length > 0 ? data[0][val]+" °F" : "")
              )
              : 
              ""
@@ -99,37 +45,24 @@ class WaterTempPage extends React.Component{
             inVal:"celsius"
         }
     ];
-
-    pageDataFilter = () => NOAAFilteredDataTranslator(["t","v","f"],"TempDataData"); 
-
-    componentWillUnmount(){
-        this.abortFetch.abort();
-    }
-
     render(){
-        const { station, waterTemp, tempUnit} = this.state;
+        const {tempUnit} = this.state;
+        const {data, station} = this.props;
         const pageBody1 = (
-            <React.Fragment>
                 <PageBodyTopCardJumbotron
                     customClasses="text-white mb-4" 
                     title={(station ? station.name : "")}
-                >
-                <h6>Water Temperature:</h6>
-                <PageBodyButtonGroup btns={this.btnGroupArray()}/>
-                <br/>
-                <br/>
-                <h3 className="display-4"><strong>{this.showCelOrFar(tempUnit,"v")}</strong></h3>
-                <br/>
-                <hr className="bg-light"/>
-                <br/>
-                <h6>As Of : <strong>{waterTemp.length > 0 ? parseNormalTime(waterTemp[0].t,"clock_only") : ""}</strong></h6>
-                </PageBodyTopCardJumbotron>
-            </React.Fragment>
+                    label="Water Temperature:"
+                    buttons={<PageBodyButtonGroup btns={this.btnGroupArray()}/>}
+                    mainData={this.showCelOrFar(tempUnit,"v")}
+                    secondaryDataLabel="As Of"
+                    secondaryData={data.length > 0 ? parseNormalTime(data[0].t,"clock_only") : ""}
+                />
         );
 
         return (
             <div className="page-top d-flex container-fluid p-0">
-                {waterTemp.length > 0 ? (
+                {data.length > 0 ? (
                     <PageContainer pageBody={pageBody1}/>
                 ) : (
                     <PageDataLoadingCard dataType="Water Temperature"/>
@@ -139,4 +72,4 @@ class WaterTempPage extends React.Component{
     }
 }
 
-export default WaterTempPage;
+export default WithData(WaterTempPage);

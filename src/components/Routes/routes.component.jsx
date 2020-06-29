@@ -9,6 +9,8 @@ import {
     Link
 } from 'react-router-dom'
 
+import { getFullDateForAPI } from '../../utils/time-parser-functions';
+
 import PageNavBar from '../PageComponents/page-navbar/page-navbar.component';
 import TidePage from '../../pages/tide-page/tide-page.component';
 import WindPage from '../../pages/wind-speeds-page/wind-speeds-page.component';
@@ -32,13 +34,35 @@ export default function JTRouter(){
             <br/>
             <Switch>
                 <Route exact path="/jax-tides/">
-                    <TidePage/>
+                    <TidePage 
+                        dataUrls={[
+                            'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
+                            `https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&begin_date=${getFullDateForAPI()}&end_date=${getFullDateForAPI()}&datum=MLLW&station=8720218&time_zone=lst_ldt&units=english&interval=hilo&format=json&application=NOS.COOPS.TAC.TidePred`
+                        ]}
+                        dataFilterValues={["t","v","type"]}
+                        dataFilterType="TideData"
+                        dataToFetch="predictions"
+                    />
                 </Route>
                 <Route exact path="/jax-tides/watertemp">
-                    <WaterTempPage/>
+                    <WaterTempPage
+                        dataUrls={[
+                            'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
+                            `https://tidesandcurrents.noaa.gov/api/datagetter?&station=8720218&date=latest&units=english&datum=MLLW&product=water_temperature&time_zone=LST_LDT&format=json&application=NOS.COOPS.TAC.COOPSMAP&interval=`
+                        ]}
+                        dataToFetch="data"
+                    />
                 </Route>
                 <Route exact path="/jax-tides/windspeeds">
-                    <WindPage/>
+                    <WindPage
+                        dataUrls={
+                            [
+                                'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
+                                `https://tidesandcurrents.noaa.gov/api/datagetter?&station=8720218&date=latest&units=english&datum=MLLW&product=wind&time_zone=LST_LDT&format=json&interval=`
+                            ]
+                        }
+                        dataToFetch="data"
+                    />
                 </Route>
             </Switch>
         </Router>
