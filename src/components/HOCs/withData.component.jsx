@@ -9,7 +9,7 @@ import {newArrayfromIndexes} from "../../utils/array-functions"
 //NOTE: Break the sorting portion of this HOC up into a separate HOC Later!
 const WithData = (WrappedComponent, pageName, hasList) => {
     class WithData extends React.Component {
-
+        
         state={
             loadingStatus:0,
         }
@@ -18,7 +18,7 @@ const WithData = (WrappedComponent, pageName, hasList) => {
 
         componentDidMount(){
             this.getData();
-            window.setInterval(()=>this.getData(),300000);
+            window.setInterval(()=>this.getData(),10000);
         }
         
         getData = () => {
