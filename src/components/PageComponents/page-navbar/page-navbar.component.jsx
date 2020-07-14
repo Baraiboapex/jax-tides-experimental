@@ -21,9 +21,7 @@ class PageNavBar extends React.Component{
     render(){
         const {navExpanded} = this.state;
         const {logo, brandName, render} = this.props;
-
-        console.log(navExpanded);
-
+        
         return(
             <Container>
                 <Navbar expanded={navExpanded} id="pageHeader" className="rounded" variant="dark" expand="md">

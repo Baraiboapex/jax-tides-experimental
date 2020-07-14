@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {connect} from 'react-redux'
 import {ReactComponent as Logo} from '../../assets/jax_tides.svg';
 
 import {
@@ -9,14 +9,12 @@ import {
     Link
 } from 'react-router-dom'
 
-import { getFullDateForAPI } from '../../utils/time-parser-functions';
-
 import PageNavBar from '../PageComponents/page-navbar/page-navbar.component';
 import TidePage from '../../pages/tide-page/tide-page.component';
 import WindPage from '../../pages/wind-speeds-page/wind-speeds-page.component';
 import WaterTempPage from '../../pages/water-temp-page/water-temp-page.component';
 
-export default function JTRouter(){
+const JTRouter = ({dates}) =>{
     return(
         <Router>
             <br/>
@@ -37,11 +35,11 @@ export default function JTRouter(){
                     <TidePage 
                         dataUrls={[
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
-                            `https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&begin_date=${getFullDateForAPI()}&end_date=${getFullDateForAPI()}&datum=MLLW&station=8720218&time_zone=lst_ldt&units=english&interval=hilo&format=json&application=NOS.COOPS.TAC.TidePred`
+                            `https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&begin_date=${dates.startDate}&end_date=${dates.endDate}&datum=MLLW&station=8720218&time_zone=lst_ldt&units=english&interval=hilo&format=json&application=NOS.COOPS.TAC.TidePred`
                         ]}
                         dataFilterValues={["t","v","type"]}
-                        dataFilterType="TideData"
-                        dataToFetch="predictions"
+                        dataFilterType={"TideData"}
+                        dataToFetch={"predictions"}
                     />
                 </Route>
                 <Route exact path="/jax-tides/watertemp">
@@ -50,7 +48,7 @@ export default function JTRouter(){
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
                             `https://tidesandcurrents.noaa.gov/api/datagetter?&station=8720218&date=latest&units=english&datum=MLLW&product=water_temperature&time_zone=LST_LDT&format=json&application=NOS.COOPS.TAC.COOPSMAP&interval=`
                         ]}
-                        dataToFetch="data"
+                        dataToFetch={"data"}
                     />
                 </Route>
                 <Route exact path="/jax-tides/windspeeds">
@@ -61,10 +59,19 @@ export default function JTRouter(){
                                 `https://tidesandcurrents.noaa.gov/api/datagetter?&station=8720218&date=latest&units=english&datum=MLLW&product=wind&time_zone=LST_LDT&format=json&interval=`
                             ]
                         }
-                        dataToFetch="data"
+                        dataToFetch={"data"}
                     />
                 </Route>
             </Switch>
         </Router>
     );
 }
+
+
+const mapStateToProps = state => {
+    return{
+        dates:state.dates
+    };
+};
+
+export default connect(mapStateToProps)(JTRouter);

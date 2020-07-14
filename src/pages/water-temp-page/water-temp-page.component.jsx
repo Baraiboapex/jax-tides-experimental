@@ -8,6 +8,8 @@ import { PageBodyTopCardJumbotron } from '../../components/PageComponents/page-b
 
 import WithData from '../../components/HOCs/withData.component';
 
+
+
 import './water-temp-page.styles.scss';
 
 import { NOAATranslateDataValue } from '../../utils/noaa-data-translator';
@@ -47,7 +49,8 @@ class WaterTempPage extends React.Component{
     ];
     render(){
         const {tempUnit} = this.state;
-        const {data, station} = this.props;
+        const {data, station, pageName} = this.props;
+        
         const pageBody1 = (
                 <PageBodyTopCardJumbotron
                     customClasses="text-white mb-4" 
@@ -62,7 +65,7 @@ class WaterTempPage extends React.Component{
 
         return (
             <div className="page-top d-flex container-fluid p-0">
-                {data.length > 0 ? (
+                {(data.length > 0) && (pageName === "WATER_TEMP_PAGE") ? (
                     <PageContainer pageBody={pageBody1}/>
                 ) : (
                     <PageDataLoadingCard dataType="Water Temperature"/>
@@ -72,4 +75,4 @@ class WaterTempPage extends React.Component{
     }
 }
 
-export default WithData(WaterTempPage);
+export default WithData(WaterTempPage,"WATER_TEMP_PAGE");

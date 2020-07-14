@@ -14,8 +14,7 @@ import './tide-page.styles.scss';
 import { NOAATranslateDataValue } from '../../utils/noaa-data-translator';
 import { parseNormalTime } from '../../utils/time-parser-functions';
 
-const TidePage = ({station, data, filter, latestDataTime}) => {
-        
+const TidePage = ({station, data, filter, pageName, latestDataTime}) => {
         const listItem = (item, dataFilter) => (
             <PageBodyListItem 
                 key={item.t} 
@@ -48,7 +47,7 @@ const TidePage = ({station, data, filter, latestDataTime}) => {
 
         return (
             <div className="page-top d-flex container-fluid p-0">
-                {data.length ? (
+                {(data.length > 0) && (pageName === "TIDE_PAGE") ? (
                     <PageContainer pageBody={pageBody1}/>
                 ) : (
                     <PageDataLoadingCard dataType="Tides"/>
@@ -57,4 +56,7 @@ const TidePage = ({station, data, filter, latestDataTime}) => {
         );
 }
 
-export default WithData(TidePage);
+//Create a curried function later!
+//ApplyHOCs(WithData(TidePage,"TIDE_PAGE"))(SortDataByTime)(DetermineDataEOD)
+
+export default WithData(TidePage,"TIDE_PAGE","LIST");

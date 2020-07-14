@@ -46,7 +46,7 @@ class WindPage extends React.Component{
 
     render(){
         const {speedType} = this.state;
-        const {station, data } = this.props;
+        const {station, data, pageName } = this.props;
         const pageBody1 = (
                 <PageBodyTopCardJumbotron
                     customClasses="text-white mb-4" 
@@ -61,7 +61,7 @@ class WindPage extends React.Component{
 
         return (
             <div className="page-top d-flex container-fluid p-0">
-                {data.length > 0 ? (
+                {(data.length > 0) && (pageName === "WIND_SPEED_PAGE") ? (
                     <PageContainer pageBody={pageBody1}/>
                 ) : (
                     <PageDataLoadingCard dataType="Wind Speeds"/>
@@ -71,4 +71,4 @@ class WindPage extends React.Component{
     }
 }
 
-export default WithData(WindPage);
+export default WithData(WindPage,"WIND_SPEED_PAGE");

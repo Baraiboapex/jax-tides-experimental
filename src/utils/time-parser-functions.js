@@ -43,6 +43,19 @@ export function getFullDateForAPI(){
   return fullDateForAPI;
 }
 
+export function isEOD(times){ 
+    const allTimes = times.map(time => moment(time.t));
+    const latestTime = moment.max(allTimes);
+    return moment(new Date()).valueOf() > latestTime;
+};
+
+export function getNextDayDateForAPI(){
+  const today = new Date();
+  const nextDay = new Date().setDate(today.getDate() + 1);
+  
+  return moment(nextDay).format("YYYYMMDD");
+}
+
 export function getFullDateForAPIWithClockTime(){
   const today = new Date();
 
@@ -61,11 +74,10 @@ export function latestTime(arr){
   .sort(m=>m.valueOf())
   .find(m=>m.isAfter());
 
-  //NOTE THIS IS A TEMPORARY FIX! REMOVE THIS LATER!!
   const whatToReturn = (nextTime !== undefined ? 
     arr.filter(item => item.t.replace(/-/gi,'/') === nextTime._i)[0] 
     :
-    arr.filter(item => item.t ===  moment(arr[3].t, "YYYY/MM/DD HH:mm")._i)[0]
+    arr.filter(item => item.t ===  moment(arr[arr.length - 1].t, "YYYY/MM/DD HH:mm")._i)[0]
   );
 
   return whatToReturn;

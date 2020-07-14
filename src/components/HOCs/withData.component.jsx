@@ -1,59 +1,64 @@
 import React from 'react';
 
 import { NOAAFilteredDataTranslator } from '../../utils/noaa-data-translator';
-import { latestTime } from '../../utils/time-parser-functions';
+import { latestTime, isEOD, getFullDateForAPI, getNextDayDateForAPI } from '../../utils/time-parser-functions';
+import {setApiStartAndEndDates, fetchApiData, reAddTransformedDataArray} from "../../redux/actions/globalAjaxActions/globalAjax.actions";
+import {connect} from "react-redux";
+import {newArrayfromIndexes} from "../../utils/array-functions"
 
-const WithData = WrappedComponent => {
+//NOTE: Break the sorting portion of this HOC up into a separate HOC Later!
+const WithData = (WrappedComponent, pageName, hasList) => {
     class WithData extends React.Component {
         state={
-            station:{},
-            data:[],
-            loadingStatus:0
+            loadingStatus:0,
         }
-    
+
         abortFetch = new AbortController();
-    
+
         componentDidMount(){
             this.getData();
-            window.setInterval(()=>{
-                this.getData();
-            },300000);
+            window.setInterval(()=>this.getData(),10000);
         }
-    
+        
         getData = () => {
-            const{dataUrls} = this.props;
-            const getAllRequests = dataUrls.map(
-                url => fetch(url,{signal:this.abortFetch.signal}).then(res => {
-                    if(res.ok){
-                        return res.json();
-                    }else{
-                        return Promise.reject({
-                            status:res.status,
-                            error:res.statusText
-                        })
-                    }
-                })
-            );
-            Promise.all(getAllRequests)
-            .then(stationAndTides => {
-                return this.setState(
-                    {
-                        station:stationAndTides[0].stations[0], 
-                        data:stationAndTides[1][this.props.dataToFetch]
-                    }
-                    ,()=>{
-                        console.log(stationAndTides[1]);
-                        this.getLatestDataTime();
-                        this.sortDataByTime();
-                    }
-                )
-            })
-            .catch(error => {
-                if(error.name === "AbortError") return
-                console.log(error)
+            const {fetchApiData, dataToFetch, dataUrls, reAddTransformedDataArray} = this.props;
+            const ApiDetails = {
+                dataUrls,
+                dataToFetch,
+                abortController:this.abortFetch,
+                pageToGetDataFor:pageName
+            }
+
+            fetchApiData(ApiDetails).then(data => {
+                console.log("bla");
+                this.stateLatestDataTime(data,dataUrls);
+                reAddTransformedDataArray(this.sortDataByTime(data));
+                this.determineEOD(data);
+                if(this.state.isEOD){
+                    reAddTransformedDataArray(this.sortDataByTime(newArrayfromIndexes([2,3,4,5],data)));
+                }
+            }).catch(err => {
+                if(err.name !== "AbortError"){
+                    console.log(err);
+                }
             });
-        }    
-    
+
+        }
+
+        determineEOD = data => {
+            const {setApiStartAndEndDates} = this.props;
+            if(hasList === "LIST"){
+                if(isEOD(data)){
+                    this.setState({isEOD:true});
+                    setApiStartAndEndDates({
+                        startDate:getFullDateForAPI(),
+                        endDate:getNextDayDateForAPI()
+                    });
+                    this.getData();
+                }
+            }
+        } 
+
         pageDataFilter = () => {
             const{dataFilterValues, dataFilterType}=this.props;
             if(dataFilterValues && dataFilterType){
@@ -61,42 +66,52 @@ const WithData = WrappedComponent => {
             }
             return;
         }
-        
-        getLatestDataTime = () => {
-            if(this.state.data.length > 1){
-                const {data} = this.state;
-                return this.setState({latestDataTime: latestTime(data)});
+
+        stateLatestDataTime = (data) => {
+            if(data.length > 1){
+                this.setState({latestDataTime: latestTime(data)});
             }
             return null;
         }
 
-        sortDataByTime = () => {
-            const currData = [...this.state.data];
-            const newSortedData = currData.slice().sort((curr,prev) => new Date(curr.t) > new Date(prev.t) ? -1 : 1);
-            this.setState({
-                 data:newSortedData
-            });
+        sortDataByTime = (data) => {
+            const sort = [...data];
+            const newSortedData = sort.slice().sort((curr,prev) => new Date(curr.t) > new Date(prev.t) ? 1 : -1);
+            return newSortedData;
         }
-        
+
         componentWillUnmount(){
             this.abortFetch.abort();
         }
 
         render(){
-            const {data, station, latestDataTime} = this.state;
+            const {latestDataTime} = this.state;
+            const {tideStationData} = this.props;
+            console.log(tideStationData.data);
             return (
-                <WrappedComponent 
-                    data={data} 
-                    station={station} 
-                    filter={this.pageDataFilter} 
+                <WrappedComponent
+                    data={tideStationData.data}
+                    station={tideStationData.station}
+                    filter={this.pageDataFilter}
                     latestDataTime={latestDataTime}
+                    pageName={tideStationData.currentPage}
                 />
             );
         }
     }
-    return WithData;
-} 
 
+    const mapStateToProps = state =>({
+        tideStationData:state.tideStationData,
+        dates:state.dates
+    });
 
+    const mapDispatchToProps = dispatch => ({
+        setApiStartAndEndDates: (dates) => dispatch(setApiStartAndEndDates(dates)),
+        reAddTransformedDataArray: (data) => dispatch(reAddTransformedDataArray(data)),
+        fetchApiData: (urls) => dispatch(fetchApiData(urls))
+    });
+
+    return connect(mapStateToProps,mapDispatchToProps)(WithData);
+}
 
 export default WithData;
