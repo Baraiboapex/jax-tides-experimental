@@ -9,6 +9,7 @@ import {newArrayfromIndexes} from "../../utils/array-functions"
 //NOTE: Break the sorting portion of this HOC up into a separate HOC Later!
 const WithData = (WrappedComponent, pageName, hasList) => {
     class WithData extends React.Component {
+        
         state={
             loadingStatus:0,
         }
