@@ -54,7 +54,7 @@ const WithData = (WrappedComponent, pageName, hasList) => {
                         startDate:getFullDateForAPI(),
                         endDate:getNextDayDateForAPI()
                     });
-                    this.getData();
+                    //this.getData();
                 }
             }
         } 
