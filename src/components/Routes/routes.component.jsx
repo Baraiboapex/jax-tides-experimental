@@ -14,6 +14,8 @@ import TidePage from '../../pages/tide-page/tide-page.component';
 import WindPage from '../../pages/wind-speeds-page/wind-speeds-page.component';
 import WaterTempPage from '../../pages/water-temp-page/water-temp-page.component';
 
+const URL = "/jax-tides-experimental";
+
 const JTRouter = ({dates}) =>{
     return(
         <Router>
@@ -23,15 +25,15 @@ const JTRouter = ({dates}) =>{
                 logo={<Logo className="jax-tides-logo"/>}
                 render={(navExpanded, closeNav) => (
                     <React.Fragment>
-                        <div className="link p-1"><Link to ="/jax-tides/" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
-                        <div className="link p-1"><Link to ="/jax-tides/watertemp" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
-                        <div className="link p-1"><Link to ="/jax-tides/windspeeds" onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
+                        <div className="link p-1"><Link to ={URL+"/"} onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-water">&nbsp;</i>Tides</Link></div>
+                        <div className="link p-1"><Link to ={URL+"/watertemp"} onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-thermometer-three-quarters"></i>&nbsp;Water Temp</Link></div>
+                        <div className="link p-1"><Link to ={URL+"/windspeeds"} onClick={()=>(navExpanded ? closeNav() : null)}><i className="fas fa-wind"></i>&nbsp;Wind Speeds</Link></div>
                     </React.Fragment>
                 )}
             />
             <br/>
             <Switch>
-                <Route exact path="/jax-tides/">
+                <Route exact path={URL+"/"}>
                     <TidePage 
                         dataUrls={[
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
@@ -42,7 +44,7 @@ const JTRouter = ({dates}) =>{
                         dataToFetch={"predictions"}
                     />
                 </Route>
-                <Route exact path="/jax-tides/watertemp">
+                <Route exact path={URL+"/watertemp"}>
                     <WaterTempPage
                         dataUrls={[
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
@@ -51,7 +53,7 @@ const JTRouter = ({dates}) =>{
                         dataToFetch={"data"}
                     />
                 </Route>
-                <Route exact path="/jax-tides/windspeeds">
+                <Route exact path={URL+"/windspeeds"}>
                     <WindPage
                         dataUrls={
                             [
