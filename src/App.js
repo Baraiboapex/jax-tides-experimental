@@ -9,14 +9,16 @@ import PageBackground from './components/PageComponents/page-background/page-bac
 function App() {
   return (
     <div className="App">
-      <PageBackground>
-        {/*<JTRouter/>*/}
-        <div className="container-fluid">
-          <div className="d-flex justify-content-center">
-              <div className="text-light"><h1>This app goes BLA!!!!!!</h1></div>
-          </div>
+      {/* 
+        <PageBackground>
+          <JTRouter/>
+        </PageBackground>
+      */}
+      <div className="container-fluid">
+        <div className="d-flex justify-content-center">
+          <div className="text-light"><h1>This app goes BLA!!!!!!</h1></div>
         </div>
-      </PageBackground>
+      </div>
     </div>
   );
 }
