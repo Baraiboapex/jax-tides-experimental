@@ -14,7 +14,7 @@ import TidePage from '../../pages/tide-page/tide-page.component';
 import WindPage from '../../pages/wind-speeds-page/wind-speeds-page.component';
 import WaterTempPage from '../../pages/water-temp-page/water-temp-page.component';
 
-const URL = "/";
+const URL = "/jax-tides-experimental";
 
 const JTRouter = ({dates}) =>{
     return(
@@ -33,7 +33,7 @@ const JTRouter = ({dates}) =>{
             />
             <br/>
             <Switch>
-                <Route exact path={URL}>
+                <Route exact path={URL+"/"}>
                     <TidePage 
                         dataUrls={[
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
@@ -44,7 +44,7 @@ const JTRouter = ({dates}) =>{
                         dataToFetch={"predictions"}
                     />
                 </Route>
-                <Route exact path={URL+"watertemp"}>
+                <Route exact path={URL+"/watertemp"}>
                     <WaterTempPage
                         dataUrls={[
                             'https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations/8720218.json?type=tidepredictions&units=english',
@@ -53,7 +53,7 @@ const JTRouter = ({dates}) =>{
                         dataToFetch={"data"}
                     />
                 </Route>
-                <Route exact path={URL+"windspeeds"}>
+                <Route exact path={URL+"/windspeeds"}>
                     <WindPage
                         dataUrls={
                             [
