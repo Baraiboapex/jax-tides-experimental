@@ -16,7 +16,7 @@ function App() {
       */}
       <div className="container-fluid">
         <div className="d-flex justify-content-center">
-          <div className="text-light"><h1>This app goes BLA!!!!!!</h1></div>
+          <div className="text-light"><h1>This app goes BLA!!!!!! 2</h1></div>
         </div>
       </div>
     </div>
